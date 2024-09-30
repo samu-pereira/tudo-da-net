@@ -90,12 +90,27 @@ html, body {
 }
 
 .cart-icon {
+    position: relative; /* Isso permite posicionar o contador em relação ao ícone */
     margin-left: 10px;
-}
-
-.cart-icon:hover {
+  }
+  
+  .cart-icon:hover {
     transform: scale(1.1);
-}
+  }
+  
+  .cart-quantity {
+    position: absolute;
+    top: -10px;  /* Move o contador para cima do ícone */
+    right: -10px;  /* Move o contador para a direita do ícone */
+    background-color: white;
+    color: #311847;
+    border-radius: 50%;  /* Faz o contador ficar circular */
+    padding: 5px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  /* Adiciona uma sombra suave */
+  }
+  
 
 .navigate-container {
     min-width: 180px;

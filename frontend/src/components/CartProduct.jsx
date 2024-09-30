@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Skeleton from "./Skeleton";
+import Skeleton from "./common/Skeleton";
 import axios from "axios";
 import "../styles/cart.css"
 

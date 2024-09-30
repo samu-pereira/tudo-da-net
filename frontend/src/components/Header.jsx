@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "./Contexts";
+import { UserContext } from "./contexts/Contexts";
+import CartIcon from "./CartIcon";
 import axios from "axios";
 import "../styles/header.css";
 
 
 function Header() {
-  const { user, setUser, logoutUser } = useContext(UserContext);
+  const [username, setUsername] = useState("Guest");
   const [searchBar, setSearchBar] = useState("");
   const [headerWidth, setHeaderWidth] = useState(null);
-  const navigate = useNavigate();
   const formRef = useRef(null);
+  const navigate = useNavigate();
   
   useEffect(() => {
     const headerContainer = document.querySelector(".home-header");
@@ -18,14 +19,30 @@ function Header() {
   }, [])
 
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (userData && userData != undefined) {
-      setUser(JSON.parse(userData));
+
+    async function getUsername() {
+      try {
+        const response = await axios.get("http://localhost:3001/api/user", 
+          {
+            headers: { Authorization: localStorage.getItem("authToken")},
+            withCredentials: true,  
+          }
+        );
+
+        setUsername(response.data.username)
+
+      } catch (error) {
+        console.log(error)
+      }
     }
+
+    if (localStorage.getItem("authToken")) getUsername();
+
   }, []);
 
+
+
   function DisplayName() {
-    const { username } = user;
     return (
       <h2>
         {username ? username[0].toUpperCase() + username.substring(1) : "Guest"}
@@ -38,13 +55,12 @@ function Header() {
     window.alert("Pesquisa");
   }
 
-  function handleCart(cart) {
+  function handleCart() {
     navigate("/api/cart");
   }
   
   function handleLogout() {
-    logoutUser();
-    localStorage.clear();
+    localStorage.removeItem("authToken");
     window.alert("Logged Out");
   }
 
@@ -76,43 +92,38 @@ function Header() {
 
 
         {window.location.pathname === "/" 
-        ? ( <div className="search-bar-container">
-          <form ref={formRef} onSubmit={(e) => handleSubmit(e)}>
-            <input
-              type="text"
-              id="search-bar-input"
-              className="search-bar-input"
-              name="search-bar"
-              autoComplete="off"
-              value={searchBar}
-              placeholder="Pesquise por um produto"
-              onChange={(e) => setSearchBar(e.target.value)}
-              required
-            />
-            <div
-              className="search-icon"
-              type="button"
-              onClick={(e) => handleSubmit(e)}
-            >
-              <img
-                width="25"
-                height="25"
-                src="https://img.icons8.com/fluency-systems-regular/25/311847/search--v1.png"
-                alt="search--v1"
-              />
-            </div>
-          </form>
-          <div className="cart-icon" onClick={handleCart}>
-            <img
-              width="30"
-              height="30"
-              src="https://img.icons8.com/metro/30/311847/shopping-cart.png"
-              alt="shopping-cart"
-            />
-          </div>
-        </div>) 
-        : <></>
-         }
+          ? (<div className="search-bar-container">
+              <form ref={formRef} onSubmit={(e) => handleSubmit(e)}>
+                <input
+                  type="text"
+                  id="search-bar-input"
+                  className="search-bar-input"
+                  name="search-bar"
+                  autoComplete="off"
+                  value={searchBar}
+                  placeholder="Pesquise por um produto"
+                  onChange={(e) => setSearchBar(e.target.value)}
+                  required
+                />
+                <div
+                  className="search-icon"
+                  type="button"
+                  onClick={(e) => handleSubmit(e)}
+                >
+                  <img
+                    width="25"
+                    height="25"
+                    src="https://img.icons8.com/fluency-systems-regular/25/311847/search--v1.png"
+                    alt="search--v1"
+                  />
+                </div>
+              </form>
+              <div className="cart-section">
+                <CartIcon handleCart={handleCart} />
+              </div>
+            </div>) 
+          : <></>
+        }
 
         <div className="navigate-container">
           {localStorage.getItem("authToken") ? (

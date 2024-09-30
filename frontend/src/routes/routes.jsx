@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserProvider } from "../components/Contexts.jsx";
+import { UserProvider } from "../components/contexts/Contexts.jsx";
 
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Cart from "./pages/Cart.jsx";
-import Layout from "../components/Layout.jsx";
+import Layout from "../components/common/Layout.jsx";
 
 const AppRoutes = () => {
   return (

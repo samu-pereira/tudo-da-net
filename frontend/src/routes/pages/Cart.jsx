@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import CartProduct from "../../components/CartProduct.jsx";
-import { UserContext } from "../../components/Contexts.jsx";
+import { UserContext } from "../../components/contexts/Contexts.jsx";
 import axios from "axios";
 import "../../styles/cart.css"
-import Loading from "../../components/Loading.jsx";
+import Loading from "../../components/common/Loading.jsx";
 
 function Cart() {
   document.title = "Cart";

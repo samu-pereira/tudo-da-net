@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/product.css";
 
 
@@ -24,14 +25,52 @@ function Product({ product }) {
     setQuantity(newQuantity);
   } 
 
-  function handleAdd() {
+  function DisplayInfo({ info }) {
+    if (info.length > 55 ) {
+      const trimmedInfo = info.substring(0, 52);
+      const words = trimmedInfo.split(" ");
+      const lastWord = words[words.length - 1];
+      const maxString = 55;
+      const ellipsis = "...";
+
+      const reducedInfo = lastWord.length + ellipsis.length > maxString - trimmedInfo.indexOf(lastWord)
+        ? trimmedInfo.substring(0, trimmedInfo.indexOf(lastWord) - 1) + ellipsis
+        : trimmedInfo + ellipsis
     
+
+      return (
+        <span className="info-ellipsis" title={info}>{reducedInfo}</span>
+      );
+
+    } else {
+      return (
+        <span className="info">
+          {info}
+        </span>)
+    }
+  }
+
+  async function handleAdd() {
     try {
-      const userCart = localStorage.getItem("userCart");
+      const response = await axios.get("http://localhost:3001/api/user", 
+      {
+        headers: { Authorization: localStorage.getItem("authToken")},
+        withCredentials: true,  
+      });
+
+      console.log("Product Response ------> ", response);
+
+      const { userId } = response.data;
+
+
+      const userCart = localStorage.getItem(`userCart`);
       if (!userCart) {
-        localStorage.setItem("userCart", JSON.stringify([{ _id, quantity }]))
+        localStorage.setItem(`userCart`, JSON.stringify([{ _id, quantity }]))
         window.alert(`Adicionado ${quantity} x ${info} ao carrinho`);
+        window.dispatchEvent(new Event('storage'));
+
         return setQuantity(1);
+        
       }
       const cart = JSON.parse(userCart) 
 
@@ -42,7 +81,7 @@ function Product({ product }) {
         ? existingItem.quantity += quantity 
         : cart.push({ _id, quantity });
 
-      localStorage.setItem("userCart", JSON.stringify(cart))
+      localStorage.setItem(`userCart`, JSON.stringify(cart))
 
       window.alert(`Adicionado ${quantity} x ${info} ao carrinho`);
 
@@ -50,7 +89,9 @@ function Product({ product }) {
       
       console.log("Add Product Response ------> ", { _id, quantity });
       console.log("Cart After Add ------> ", cart);
-      
+
+      window.dispatchEvent(new Event('storage'));
+
     } catch (error) {
       console.log(error.response.data.msg);
       window.alert(error.response.data.msg);
@@ -63,7 +104,11 @@ function Product({ product }) {
       <div className="img-container">
         <img src={url} alt="imagem do produto"></img>
       </div>
-      <p className="product-info">{info}</p>
+
+      <div className="product-info">
+        <DisplayInfo info={info} />
+      </div>
+
       <span className="product-price">
         <h5 className="price-tag">R$</h5>
         <h2 className="price-value">{price.toFixed(2)}</h2>

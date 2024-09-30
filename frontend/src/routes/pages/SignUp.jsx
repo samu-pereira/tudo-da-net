@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../components/Contexts";
+import { UserContext } from "../../components/contexts/Contexts";
 import axios from "axios";
 import "../../styles/card.css";
 
@@ -43,7 +43,6 @@ function SignUp() {
       console.log("User by Signup ------> ", user)
 
       localStorage.setItem("authToken", token);
-      localStorage.setItem("userData", JSON.stringify(userData));
       navigate("/");
     } catch (error) {
       window.alert(error.response.data.message || error.response.data.msg);

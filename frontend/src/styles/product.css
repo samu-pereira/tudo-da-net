@@ -29,7 +29,6 @@
 
 .product-info, .product-price, .price-tag, .price-value{
     display: flex;
-    text-align: justify;
     margin: 0;
 }
 

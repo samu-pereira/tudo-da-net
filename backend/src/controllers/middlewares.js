@@ -19,15 +19,15 @@ export const checkToken = async (req, res, next) => {
   try {
     const secret = process.env.SECRET;
     const decodedToken = jwt.verify(token, secret);
-    const id = decodedToken.id;
-    const username = decodedToken.username;
+    req.session.userId = decodedToken.id;
+    req.session.username = decodedToken.username;
 
-    if (!req.session.user) req.session.user = await User.findById(id);
+    if (!req.session.user)
+      req.session.user = await User.findById(decodedToken.id);
 
     console.log("User by Token ------> ", req.session.user);
 
-    console.log("id ------> ", id);
-    res.send(id, username);
+    console.log("id ------> ", decodedToken.id);
     next();
   } catch (err) {
     res.status(400).send({ msg: "Token inválido" });
