@@ -1,0 +1,102 @@
+.cart-main {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    padding-bottom: 0;
+    color: #311847;
+}
+
+.cart-container, .label-list {
+    display: flex;
+    width: 100%;
+    min-width: 1200px;
+    max-width: 1400px;
+    height: 140px;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e3d3f7ce;
+    margin-bottom: 15px;
+}
+
+.label-list {
+    height: auto;
+    color: #564c9b
+}
+
+.cart-price, .cart-quant, .cart-total, 
+.label-price, .label-quant, .label-total {
+    display: flex;
+    width: 120px;
+    justify-content: center;
+    margin: 0;
+}
+
+.label-info, .cart-info {
+    display: flex;
+    min-width: 300px;
+    margin: 0;
+}
+
+.info-txt {
+    max-width: 190px;
+    margin-left: 10px;
+}
+
+.delete-product {
+    background-color: #311847;
+    color: white;
+    width: 50%;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+}
+
+.cart-quant button {
+    background-color: #311847;
+    color: white;
+    border: 1px solid rgba(49, 24, 71, 0.452);
+    font-size: 16px;
+    width: 30px;
+}
+
+.cart-quant button:hover, .delete-product:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.quant-value {
+    display: flex;
+    width: 60px;
+    height: 30px;
+    background-color: transparent;
+    text-align: center;
+    margin: 0;
+    border: none;
+    border-top: 2px solid rgba(49, 24, 71, 0.452);
+    border-bottom: 2px solid rgba(49, 24, 71, 0.452);
+}
+
+.quant-value::-webkit-inner-spin-button, .quant-value::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin:0;
+}
+
+.quant-value:focus {
+    outline: none;
+}
+
+.cart-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    height: 100px;
+    width: 100%;
+    /* background-color: #e3d3f7; */
+    box-sizing: border-box;
+    padding: 10px;
+    /* box-shadow: 0 -2px 5px rgba(0,0,0,0.1); */
+}

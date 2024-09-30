@@ -1,0 +1,135 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #dbfffd;
+}
+
+.home-header {
+    width: 100%;
+    height: 140px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #e3d3f7;
+}
+
+.header-container{
+    margin: 0 auto 0 auto;
+    max-width: 1400px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+
+.header-logo{
+    display: flex;
+    align-items: center;
+    height: 100px;
+    min-width: 300px;
+}
+
+.header-logo .logo {
+    width: 100px;
+    height: auto; 
+}
+
+.header-logo h1 {
+    color: #564c9b
+}
+
+.header-logo .subtitle {
+    margin-left: 10px;
+}
+
+.search-bar-container {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.search-bar-container form {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    height: 50%;
+    padding: 5px;
+    border: 1px solid #B2A4F3;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F2F2F5;
+
+}
+
+.search-bar-input {
+    width: 100%;
+    min-width: 165px;
+    background-color: #F2F2F5;
+    color: #311847;
+    border: none;
+    outline: none;
+}
+
+/* .search-bar-container button {
+    border: none;
+    border-radius: 5px;
+    background-color: #311847;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+} */
+
+.search-icon {
+    cursor: pointer;
+    height: 25px;
+}
+
+.cart-icon {
+    margin-left: 10px;
+}
+
+.cart-icon:hover {
+    transform: scale(1.1);
+}
+
+.navigate-container {
+    min-width: 180px;
+    height: 50px;
+}
+
+.navigate-container h2{
+    height: 100%;
+    display: flex;
+    text-align: left;
+    justify-items: center;
+    color: #564c9b;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.navigate-container h2:hover {
+    text-decoration: underline;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    padding: 0px 30px 0px 0px;
+    margin-right: 30px;
+}
+
+a {
+    color: #564c9b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}

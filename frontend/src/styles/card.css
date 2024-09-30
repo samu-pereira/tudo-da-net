@@ -1,0 +1,91 @@
+.card-container {
+    height: calc(100vh - 140px);    
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
+
+.card-container section{
+    width: 100%;
+    max-width: 350px; 
+    height: 360px;    
+    padding: 20px;
+    background-color: #e3d3f7;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font: Georgia, serif;
+}
+
+.card-container h1 {
+    text-align: center;
+    color: #564c9b;
+    margin-top: 10px;
+    margin-bottom: 24px;
+    font-size: 36px;
+}
+
+form{
+    text-align: center;
+}
+
+label {
+    text-align: left;
+    display: block;
+    color: #564c9b;
+}
+
+.card-container input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    outline: none;
+    border: 2px solid #ccc;
+    background-color: aliceblue;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+}
+
+.card-container button{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #311847;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-text {
+    margin-top: 32px;
+}
+
+.card-container a {
+    color: #1e88e5;
+}
+
+section .header-logo{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0px;     
+    left: 0px;  
+    padding: 20px;
+    height: 100px;
+    min-width: 300px;
+}
+
+.header-logo .logo {
+    width: 100px;
+    height: auto; 
+}
+
+.header-logo h1 {
+    margin: 0;
+    color: #564c9b;
+    font-size: 32px;
+}
