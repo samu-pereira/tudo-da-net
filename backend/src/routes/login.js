@@ -10,11 +10,8 @@ router.post("/api/login", async (req, res) => {
   const findUser = await User.findOne({ username });
 
   try {
-    if (!findUser) throw new Error("Username or password is incorrect");
-    if (!comparePassword(password, findUser.password)) {
-      throw new Error("username or password is incorrect");
-    }
-
+    if (!findUser || !comparePassword(password, findUser.password))
+      throw new Error("Username or password is incorrect");
     req.session.user = findUser;
     const secret = process.env.SECRET;
     const token = jwt.sign(

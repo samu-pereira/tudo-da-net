@@ -27,13 +27,17 @@
     border-radius: 8px;
 }
 
-.product-info, .product-price, .price-tag, .price-value{
+.product-info, .product-price, .price-tag, .price-value, .stock-value{
     display: flex;
     margin: 0;
 }
 
-.price-tag {
+.price-tag, .stock-value {
     line-height: 30px;
+}
+
+.stock-value {
+    margin-left: 5px;
 }
 
 .product-add {

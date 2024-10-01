@@ -37,13 +37,18 @@
 
 .label-info, .cart-info {
     display: flex;
-    min-width: 300px;
+    min-width: 330px;
     margin: 0;
 }
 
 .info-txt {
-    max-width: 190px;
+    max-width: 220px;
+    height: 100px;
     margin-left: 10px;
+}
+
+.product-txt {
+    margin-bottom: 2px;
 }
 
 .delete-product {

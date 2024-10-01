@@ -10,15 +10,15 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
   const [quant, setQuant] = useState(parseInt(quantity));
   const [totalPrice, setTotalPrice] = useState(1)
 
-  function handleQuantity(e) {
-    const newQuantity = e.target.value > 0 && e.target.value < 100 ? e.target.value : quantity;
+  function handleQuantity(value) {
+    const newQuantity = value > 0 && value <= productData.stock ? parseInt(value) : parseInt(quantity);
     setQuant(newQuantity);
     handleNewQuantity(newQuantity);
   }
 
   function plusQuantity () {
     const newQuantity = parseInt(quant) + 1;
-    if (newQuantity > 99) return
+    if (newQuantity > productData.stock) return window.alert("Estoque insuficiente")
     setQuant(newQuantity);
     handleNewQuantity(newQuantity);
   } 
@@ -104,15 +104,19 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
         : <>
             <div className="cart-info">
               <img height={100} width={100} src={productData.url} alt="product" />
+
               <div className="info-txt">
-                <p>{productData.info}</p>
+                <div className="product-txt">
+                  <span className="product-info"><strong>{productData.info}</strong></span>
+                  <span className="product-stock">Estoque: {productData.stock}</span>
+                </div>
                 <button className="delete-product" onClick={() => handleDelete()}>
                   Delete
                 </button>
               </div>
             </div>
 
-            <p className="cart-price">R${parseFloat(productData.price).toFixed(2)}</p>
+            <p className="cart-price"><strong>R${parseFloat(productData.price).toFixed(2)}</strong></p>
 
             <div className="cart-quant">
               <button
@@ -130,7 +134,7 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
                   min={1}
                   max={99}
                   onFocus={(e) => e.target.select()}
-                  onChange={handleQuantity}
+                  onChange={(e) => handleQuantity(e.target.value)}
                 />
               
               <button
@@ -142,7 +146,7 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
               </button>
             </div>
 
-            <p className="cart-total">R${totalPrice.toFixed(2)}</p>     
+            <p className="cart-total"><strong>R${totalPrice.toFixed(2)}</strong></p>     
           </>
       }      
     </section>

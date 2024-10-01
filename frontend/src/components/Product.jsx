@@ -5,17 +5,17 @@ import "../styles/product.css";
 
 
 function Product({ product }) {
-  const { url, info, price, _id } = product;
+  const { url, info, price, stock, _id } = product;
   const [ quantity, setQuantity ] = useState(1);
   const navigate = useNavigate();
 
-  function handleQuantity(e) {
-    setQuantity(e.target.value > 0 ? e.target.value : 0);
+  function handleQuantity(value) {
+    setQuantity(value > 0 && value <= stock ? value : 1);
   }
 
   function plusQuantity () {
     const newQuantity = quantity + 1;
-    if (newQuantity > 99) return
+    if (newQuantity > stock) return
     setQuantity(newQuantity);
   } 
 
@@ -62,24 +62,24 @@ function Product({ product }) {
 
       const { userId } = response.data;
 
-
       const userCart = localStorage.getItem(`userCart`);
+
       if (!userCart) {
         localStorage.setItem(`userCart`, JSON.stringify([{ _id, quantity }]))
         window.alert(`Adicionado ${quantity} x ${info} ao carrinho`);
         window.dispatchEvent(new Event('storage'));
-
         return setQuantity(1);
-        
       }
       const cart = JSON.parse(userCart) 
 
       console.log("Cart Before Add ------> ", cart);
 
       const existingItem = cart.find((cartItem) => cartItem._id === _id);
-      existingItem 
-        ? existingItem.quantity += quantity 
-        : cart.push({ _id, quantity });
+
+      if(existingItem) {
+        if(existingItem.quantity + quantity > stock) return window.alert("Estoque insuficiente")
+          existingItem.quantity += quantity;
+      } else cart.push({ _id, quantity });
 
       localStorage.setItem(`userCart`, JSON.stringify(cart))
 
@@ -112,6 +112,7 @@ function Product({ product }) {
       <span className="product-price">
         <h5 className="price-tag">R$</h5>
         <h2 className="price-value">{price.toFixed(2)}</h2>
+        <h5 className="stock-value">Estoque {stock}</h5>        
       </span>
       
       <div className="product-add">
@@ -122,9 +123,9 @@ function Product({ product }) {
             type="number"
             value={quantity}
             min={1}
-            max={99}
+            max={stock}
             onFocus={(e) => e.target.select()}
-            onChange={handleQuantity}
+            onChange={(e) => handleQuantity(e.target.value)}
           />
           <div className="quantity-buttons">
             <button

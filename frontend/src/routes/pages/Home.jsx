@@ -12,7 +12,6 @@ function Home() {
   async function GetProductList() {
     try {
       const response = await axios.get(`http://localhost:3001/api/products`, {
-      // const response = await axios.get(`http://localhost:3001/api/products?search=${query}`, {
         withCredentials: true,
       });
       console.log("Product List ------> ", response.data);

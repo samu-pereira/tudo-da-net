@@ -35,44 +35,45 @@ function Cart() {
   return (
     <>
       <main className="cart-main">
-          { isLoading 
+          {isLoading 
             ? <Loading /> 
-            : <div className="cartlist-container">
-                <div className="label-list">
-                  <h3 className="label-info">Produtos</h3>
-                  <h3 className="label-price">Preço Unitário</h3>
-                  <h3 className="label-quant">Quantidade</h3>
-                  <h3 className="label-total">Preço Total</h3>
-                </div>
-                <div className="cart-list">
-                  {userCart.length > 0 ? (
-                    <>
-                      {userCart.map((product, index) => (
-                        <CartProduct
-                        key={index} 
-                        productId={product._id} 
-                        quantity={product.quantity}
-                        totalValue={totalValue}
-                        setTotalValue={setTotalValue}
-                        setUserCart={setUserCart}
-                        />
-                      ))}
+            : <>
+                {userCart.length > 0 
+                  ? <div className="cartlist-container">
+                      <div className="label-list">
+                        <h3 className="label-info">Produtos</h3>
+                        <h3 className="label-price">Preço Unitário</h3>
+                        <h3 className="label-quant">Quantidade</h3>
+                        <h3 className="label-total">Preço Total</h3>
+                      </div>
 
+                      <div className="cart-list">
+                        {userCart.map((product, index) => (
+                          <CartProduct
+                            key={index} 
+                            productId={product._id} 
+                            quantity={product.quantity}
+                            totalValue={totalValue}
+                            setTotalValue={setTotalValue}
+                            setUserCart={setUserCart}
+                          />
+                        ))}                    
+                      </div>
+                    </div>
 
-                    
-                    </>
-
-                  ) : (
-                    <p>Your cart is empty</p>
-                  )}
-                </div>
-              </div> 
+                  : <h1>Your cart is empty</h1>
+                }
+              </>
           }
       </main>
-      <footer className="cart-footer">
-        <h1><strong>Valor Total: R${totalValue.toFixed(2)}</strong></h1>
-        <button className="pay-button">Pagar</button>
-      </footer>
+
+      {userCart.length > 0 
+        ? <footer className="cart-footer">
+            <h1><strong>Valor Total: R${totalValue.toFixed(2)}</strong></h1>
+            <button className="pay-button">Pagar</button>
+          </footer>
+        : <></>
+      }
     </>
   );
 }
