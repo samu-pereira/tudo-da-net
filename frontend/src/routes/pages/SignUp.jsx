@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../components/contexts/Contexts";
 import axios from "axios";
@@ -11,31 +11,43 @@ function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [usernameError, setUsernameError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
   const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+
   const navigate = useNavigate();
 
   function handleUsername(usernameString) {
-    setUsernameError(false);
-    if(usernameString.length < 4) setUsernameError(true);
+    setUsernameError(
+      usernameString.length < 4 
+        ? true 
+        : false
+    );
     setUsername(usernameString);
   }
 
   function handlePassword(passowrdString) {
-    setPasswordError(false);
-    if(passowrdString.length < 8) setPasswordError(true);
+    setPasswordError(
+      passowrdString.length < 8 
+        ? true 
+        : false
+    );
     setPassword(passowrdString);
   }
 
   function handleConfirmPassword(confirmPassowrdString) {
-    setConfirmPasswordError(false);
-    if(confirmPassowrdString !== password) setConfirmPasswordError(true);
+    setConfirmPasswordError(
+      confirmPassowrdString !== password 
+        ? true 
+        : false
+    );
     setConfirmPassword(confirmPassowrdString);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    
     const errors = usernameError || passwordError || confirmPasswordError;
     console.log(usernameError, passwordError, confirmPasswordError);
     console.log(errors);
@@ -85,8 +97,14 @@ function SignUp() {
           <h1>Sign Up</h1>
           <form className="signupForm" onSubmit={handleSubmit}>
             <label htmlFor="username"> 
-              Username <span className="usernameError error"> Must be at leats 4 characters. </span>
+              Username 
+              <span
+                className="usernameError error" 
+                style={{visibility: usernameError ? "visible" : "hidden"}}> 
+                  <strong> Must be at leats 4 characters. </strong>
+              </span>
             </label>
+
             <input
               type="text"
               id="username"
@@ -97,9 +115,17 @@ function SignUp() {
               onChange={(e) => handleUsername(e.target.value)}
               required
             />
+
+
             <label htmlFor="password">
-              Password <span className="passwordError error"> Must be at leats 8 characters. </span>
+              Password 
+              <span 
+                className="passwordError error"
+                style={{visibility: passwordError ? "visible" : "hidden"}}> 
+                  <strong> Must be at leats 8 characters. </strong>
+              </span>
             </label>
+
             <input
               type="password"
               id="password"
@@ -108,8 +134,15 @@ function SignUp() {
               onChange={(e) => handlePassword(e.target.value)}
               required
             />
+
+
             <label htmlFor="matchPassword">
-              Confirm Password <span className="confirmPasswordError error"> Passwords don't match. Try again. </span> 
+              Confirm Password 
+              <span 
+                className="confirmPasswordError error" 
+                style={{visibility: confirmPasswordError ? "visible" : "hidden"}}>
+                  <strong> Passwords don't match. </strong>
+                </span> 
             </label>
             <input
               type="password"

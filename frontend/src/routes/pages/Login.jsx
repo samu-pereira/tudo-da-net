@@ -43,8 +43,9 @@ function Login() {
       localStorage.setItem("authToken", token);
       navigate("/");
     } catch (error) {
-      console.log(error.response?.data || error.response?.data.msg);
-      console.log(error, error.message);
+      console.log(error);
+      window.alert(error.response.data.msg)
+      
     }
   }
   return (

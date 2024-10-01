@@ -10,14 +10,13 @@ router.post("/api/login", async (req, res) => {
   const findUser = await User.findOne({ username });
 
   try {
-    if (!findUser) throw new Error("User not found");
+    if (!findUser) throw new Error("Username or password is incorrect");
     if (!comparePassword(password, findUser.password)) {
-      throw new Error("Incorrect Password");
+      throw new Error("username or password is incorrect");
     }
 
     req.session.user = findUser;
-    const secret =
-      "c2c992ed5bb6e3e4c4a23b6e1e7154231b6f8e82e9e3b7f4f3bfe786dcd05a13a1d6e7c4f9d9c8b2e5d3c7f9f5e3d7b1";
+    const secret = process.env.SECRET;
     const token = jwt.sign(
       { id: findUser._id, username: findUser.username },
       secret
@@ -29,7 +28,7 @@ router.post("/api/login", async (req, res) => {
       cart: findUser.cart,
     };
 
-    console.log("User ----->", userData);
+    console.log("User ------> ", userData);
     return res.status(200).send({ msg: "Logged In", token, userData });
   } catch (error) {
     return res.status(401).send({ msg: error.message });

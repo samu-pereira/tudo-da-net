@@ -38,10 +38,7 @@ label {
 .error {
     visibility: hidden;
     color: red;
-}
-
-.usernameError {
-    visibility: visible;
+    margin-left: 5px;
 }
 
 .card-container input{
