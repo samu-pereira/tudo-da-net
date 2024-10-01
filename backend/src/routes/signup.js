@@ -28,11 +28,11 @@ router.post("/api/signup", confirmPassword, async (req, res) => {
 
     return res.status(201).send({ msg: "Logged In", token, userData });
   } catch (error) {
-    console.log(error);
+    console.log("Signup Error ------> ", error);
     if (error.code === 11000) {
-      res.status(400).json({ message: "This username is already taken" });
+      res.status(400).json({ msg: "This username is already taken" });
     } else {
-      res.status(400).json({ message: "An error occurred during sign up" });
+      res.status(400).json({ msg: "An error occurred during sign up" });
     }
   }
 });

@@ -52,7 +52,8 @@ function Header() {
   
   function handleSubmit(e) {
     e.preventDefault();
-    window.alert("Pesquisa");
+    const search = searchBar.trim().replace(" ", "+")
+    navigate(`/?search=${search}`);
   }
 
   function handleCart() {
@@ -103,7 +104,7 @@ function Header() {
                   value={searchBar}
                   placeholder="Pesquise por um produto"
                   onChange={(e) => setSearchBar(e.target.value)}
-                  required
+                  
                 />
                 <div
                   className="search-icon"

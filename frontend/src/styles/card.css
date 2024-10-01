@@ -35,6 +35,15 @@ label {
     color: #564c9b;
 }
 
+.error {
+    visibility: hidden;
+    color: red;
+}
+
+.usernameError {
+    visibility: visible;
+}
+
 .card-container input{
     width: 100%;
     padding: 10px;

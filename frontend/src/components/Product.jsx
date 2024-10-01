@@ -26,11 +26,11 @@ function Product({ product }) {
   } 
 
   function DisplayInfo({ info }) {
-    if (info.length > 55 ) {
-      const trimmedInfo = info.substring(0, 52);
+    if (info.length > 52 ) {
+      const trimmedInfo = info.substring(0, 48);
       const words = trimmedInfo.split(" ");
       const lastWord = words[words.length - 1];
-      const maxString = 55;
+      const maxString = 52;
       const ellipsis = "...";
 
       const reducedInfo = lastWord.length + ellipsis.length > maxString - trimmedInfo.indexOf(lastWord)
