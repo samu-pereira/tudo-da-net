@@ -4,7 +4,7 @@ import axios from "axios";
 import "../styles/cart.css"
 
 
-function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCart }) {
+function CartProduct({ productId, quantity, setUserCart, calculateTotalValue }) {
   const [productData, setProductData] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [quant, setQuant] = useState(parseInt(quantity));
@@ -15,7 +15,7 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
     setQuant(newQuantity);
     handleNewQuantity(newQuantity);
   }
-
+  
   function plusQuantity () {
     const newQuantity = parseInt(quant) + 1;
     if (newQuantity > productData.stock) return window.alert("Estoque insuficiente")
@@ -31,7 +31,6 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
   } 
 
   function totalProductPrice(price) {
-    if (quant == 0) return
     const calculateTotal = parseFloat(price) * quant;
     setTotalPrice(calculateTotal);
   }
@@ -49,6 +48,7 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
       localStorage.setItem("userCart", JSON.stringify(updatedCart))
 
       setUserCart(updatedCart);
+      calculateTotalValue(updatedCart);
 
       window.alert(`${productData.info} excluido do carrinho`);
       console.log("Cart After Delete ------> ", updatedCart);
@@ -56,7 +56,6 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
     } catch (error) {
       console.log(error);
     }}}
-
 
   
   function handleNewQuantity(newQuantity) {
@@ -67,10 +66,12 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
       console.log("Cart Before Add ------> ", cart);
 
       const updatedItem = cart.find((cartItem) => cartItem._id === productId);
-
       updatedItem.quantity = newQuantity;
+      
       setUserCart(cart);
       localStorage.setItem("userCart", JSON.stringify(cart))
+
+      calculateTotalValue(cart);
 
       console.log("Cart After Add ------> ", cart);
       
@@ -94,7 +95,7 @@ function CartProduct({ productId, quantity, totalValue, setTotalValue, setUserCa
   }, [productId]);
 
   useEffect (() => {
-    totalProductPrice(productData.price);
+    if (productData.price) totalProductPrice(productData.price);
   }, [productData, quant])
 
   return (

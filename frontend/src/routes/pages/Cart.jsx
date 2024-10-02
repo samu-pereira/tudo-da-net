@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartProduct from "../../components/CartProduct.jsx";
-import { UserContext } from "../../components/contexts/Contexts.jsx";
-import axios from "axios";
-import "../../styles/cart.css"
 import Loading from "../../components/common/Loading.jsx";
+import axios from "axios";
+import "../../styles/cart.css";
 
 function Cart() {
   document.title = "Cart";
@@ -11,16 +10,38 @@ function Cart() {
   const [isLoading, setIsLoading] = useState(true);
   const [totalValue, setTotalValue] = useState(0);
 
+    async function calculateTotalValue (cart) {
+      try {
+        const productDetails = await Promise.all(
+          cart.map(async (item) => {
+            const response = await axios.get(`http://localhost:3001/api/products/${item._id}`);
+            return { ...response.data, quantity: item.quantity };
+          })
+        );
+
+        const inicialValue = 0;
+        const total = productDetails.reduce((acc, product) => {
+          return acc + (parseFloat(product.price * product.quantity))
+        }, inicialValue);
+      
+        setTotalValue(total);
+
+      } catch (error) {
+        console.log(error)        
+      }
+    };  
 
   async function GetUserCart() {
+    const cart = localStorage.getItem("userCart");
+    if (!cart) return
+    const parsedCart = JSON.parse(cart);
+    
     try {
-      
-      const cart = localStorage.getItem("userCart");
-      if (!cart) return
+     
+    setUserCart(parsedCart);
+    console.log("Cart Response with details ------> ", parsedCart);
 
-      const parsedCart = JSON.parse(cart);
-      setUserCart(parsedCart);
-      console.log("Cart Response ------> ", parsedCart);
+    calculateTotalValue(parsedCart);
 
     } catch (error) {
       console.log(error);
@@ -29,6 +50,7 @@ function Cart() {
 
   useEffect(() => {
     GetUserCart()
+    console.log("UserCart ------> ", userCart)
     setIsLoading(false);
   }, []);
 
@@ -53,9 +75,8 @@ function Cart() {
                             key={index} 
                             productId={product._id} 
                             quantity={product.quantity}
-                            totalValue={totalValue}
-                            setTotalValue={setTotalValue}
                             setUserCart={setUserCart}
+                            calculateTotalValue={calculateTotalValue}
                           />
                         ))}                    
                       </div>
