@@ -8,7 +8,7 @@
 .product-list {
     display: grid;
     grid-template-columns: repeat(5, 240px);
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     width: 100%;
     max-width: 1400px;

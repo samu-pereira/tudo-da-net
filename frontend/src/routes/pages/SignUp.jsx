@@ -161,7 +161,7 @@ function SignUp() {
             <button type="submit">SIGN UP</button>
           </form>
         </section>
-      </div>{" "}
+      </div>
     </>
   );
 }

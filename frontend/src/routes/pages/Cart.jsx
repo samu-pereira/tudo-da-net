@@ -87,13 +87,17 @@ function Cart() {
   }
 
   useEffect(() => {
-    GetUserCart()
+    GetUserCart();
     setIsLoading(false);
   }, []);
 
   return (
     <div className="cartmain-container">
-      <main className="cart-main">
+      {isLoading
+        ? <Loading />
+        : <>
+      
+      <div className="cart-main">
           {isLoading 
             ? <Loading /> 
             : <>
@@ -123,7 +127,7 @@ function Cart() {
                 }
               </>
           }
-      </main>
+      </div>
 
       {userCart.length > 0 
         ? <footer className="cart-footer">
@@ -131,6 +135,8 @@ function Cart() {
             <button className="pay-button" onClick={handlePayment}>Pagar</button>
           </footer>
         : <></>
+      }
+      </>
       }
     </div>
   );

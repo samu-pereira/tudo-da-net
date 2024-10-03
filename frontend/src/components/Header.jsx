@@ -10,6 +10,7 @@ function Header() {
   const [username, setUsername] = useState("Guest");
   const [searchBar, setSearchBar] = useState("");
   const [headerWidth, setHeaderWidth] = useState(null);
+  const token = localStorage.getItem("authToken");
   const formRef = useRef(null);
   const navigate = useNavigate();
   
@@ -19,12 +20,11 @@ function Header() {
   }, [])
 
   useEffect(() => {
-
     async function getUsername() {
       try {
         const response = await axios.get("http://localhost:3001/api/user", 
           {
-            headers: { Authorization: localStorage.getItem("authToken")},
+            headers: { Authorization: token},
             withCredentials: true,  
           }
         );
@@ -38,7 +38,7 @@ function Header() {
 
     if (localStorage.getItem("authToken")) getUsername();
 
-  }, []);
+  }, [token]);
 
 
 

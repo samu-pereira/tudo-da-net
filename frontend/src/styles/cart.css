@@ -1,13 +1,17 @@
+main {
+    height: 100%;
+}
+
 .cartmain-container {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding-bottom: 120px;
+    /* padding-bottom: 80px; */
 }
  
 .cart-main {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     margin-top: 30px;
     height: 100%;
