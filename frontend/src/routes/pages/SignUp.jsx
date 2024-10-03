@@ -12,9 +12,11 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [usernameError, setUsernameError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const [confirmPasswordError, setConfirmPasswordError] = useState(false)
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -117,24 +119,26 @@ function SignUp() {
             />
 
 
-            <label htmlFor="password">
-              Password 
-              <span 
-                className="passwordError error"
-                style={{visibility: passwordError ? "visible" : "hidden"}}> 
-                  <strong> Must be at leats 8 characters. </strong>
-              </span>
-            </label>
+            <div className="password-container">
+              <label htmlFor="password">
+                Password 
+                <span 
+                  className="passwordError error"
+                  style={{visibility: passwordError ? "visible" : "hidden"}}> 
+                    <strong> Must be at leats 8 characters. </strong>
+                </span>
+              </label>
 
-            <input
-              type="password"
-              id="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => handlePassword(e.target.value)}
-              required
-            />
-
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e) => handlePassword(e.target.value)}
+                required
+              />
+              <div className="show-password" onClick={() => setShowPassword(!showPassword)}/>
+            </div>
 
             <label htmlFor="matchPassword">
               Confirm Password 
@@ -145,7 +149,7 @@ function SignUp() {
                 </span> 
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="confirmPassword"
               name="confirmPassword"
               autoComplete="off"

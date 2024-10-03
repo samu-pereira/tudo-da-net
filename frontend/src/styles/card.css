@@ -54,6 +54,24 @@ label {
     color: #333;
 }
 
+.password-container {
+    position: relative;
+}
+
+.show-password {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 27px;
+    right: 10px;
+    background-color: #311847;
+    border-radius: 30%;
+}
+
+.show-password:hover {
+    cursor: pointer;
+}
+
 .card-container button{
     width: 100%;
     padding: 10px;

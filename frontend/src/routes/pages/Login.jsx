@@ -10,6 +10,7 @@ function Login() {
   const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
@@ -45,7 +46,6 @@ function Login() {
     } catch (error) {
       console.log(error);
       window.alert(error.response.data.msg)
-      
     }
   }
   return (
@@ -65,15 +65,22 @@ function Login() {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+
+            
+            <div className="password-container">
+              <label htmlFor="password">Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="show-password" onClick={() => setShowPassword(!showPassword)}/>
+            </div>
+
+
             <button type="submit">LOGIN</button>
             <div className="signup-text">
               <p>

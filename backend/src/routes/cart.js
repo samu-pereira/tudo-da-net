@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { User } from "../models/user.js";
-import { checkToken, checkUser } from "../controllers/middlewares.js";
+import { checkToken } from "../controllers/middlewares.js";
 
 const router = Router();
 
@@ -39,20 +39,5 @@ router.post("/api/cart", checkToken, async (req, res) => {
     return res.status(500).send({ error: "Erro ao buscar o carrinho" });
   }
 });
-
-// DELETE
-// router.patch("/api/cart", checkToken, async (req, res) => {
-//   const { productId, user } = req.body;
-//   const { _id: userId, cart } = user;
-//   const newCart = cart.filter((value) => value.productId !== productId);
-//   try {
-//     await User.findByIdAndUpdate(userId, { cart: newCart });
-//     console.log("Cart Updated ------> ", user);
-//     return res.status(204).send({ user });
-//   } catch (error) {
-//     console.log("Cart Updated Error ------> ", error);
-//     return res.send({ msg: error });
-//   }
-// });
 
 export default router;

@@ -44,8 +44,8 @@ function Header() {
 
   function DisplayName() {
     return (
-      <h2>
-        {username ? username[0].toUpperCase() + username.substring(1) : "Guest"}
+      <h2 className="displayname" title="Clique para deslogar">
+        {username ? username[0].toUpperCase() + username.substring(1) : "Samuel"}
       </h2>
     );
   }
@@ -61,7 +61,7 @@ function Header() {
   }
   
   function handleLogout() {
-    localStorage.removeItem("authToken");
+    localStorage.clear();
     window.alert("Logged Out");
   }
 
@@ -71,7 +71,6 @@ function Header() {
      style={{
        height: headerWidth < 1400 ? "100px" : "140px",
        padding: headerWidth < 1400 ? "0 20px 0 20px" : "20px",
-      
      }}>
       <div className="header-container">
         <div className="header-logo">

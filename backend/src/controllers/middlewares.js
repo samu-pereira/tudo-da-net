@@ -33,10 +33,3 @@ export const checkToken = async (req, res, next) => {
     res.status(400).send({ msg: "Token inválido" });
   }
 };
-
-export const checkUser = (req, res, next) => {
-  if (!req.session.user)
-    return res.status(401).send({ msg: "Please Log in First" });
-  console.log("logged");
-  next();
-};

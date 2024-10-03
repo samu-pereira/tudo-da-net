@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CartProduct from "../../components/CartProduct.jsx";
 import Loading from "../../components/common/Loading.jsx";
 import axios from "axios";
@@ -9,6 +10,7 @@ function Cart() {
   const [userCart, setUserCart] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [totalValue, setTotalValue] = useState(0);
+  const navigate = useNavigate();
 
     async function calculateTotalValue (cart) {
       try {
@@ -38,24 +40,59 @@ function Cart() {
     
     try {
      
-    setUserCart(parsedCart);
-    console.log("Cart Response with details ------> ", parsedCart);
+      setUserCart(parsedCart);
+      console.log("Get User Cart ------> ", parsedCart);
 
-    calculateTotalValue(parsedCart);
+      calculateTotalValue(parsedCart);
 
     } catch (error) {
       console.log(error);
     }
   }
 
+  async function handlePayment() {
+    if (window.confirm("Deseja efetuar o pagamento?")){
+      try {
+        console.log("User Cart Before Paymant ------> ", userCart);
+        const response = await axios.put("http://localhost:3001/api/products", 
+          { userCart }, 
+          { 
+            headers: { Authorization: localStorage.getItem("authToken") },
+            withCredentials: true,
+          },
+        ); 
+
+        console.log("Payment Response ------> ", response);
+
+        if(response.status === 400) {
+          const { id, stock } = response.data.item;
+          const newCart = userCart.map((item) => {
+            if (item._id === id) {
+              return { ...item, quantity: stock }
+            };
+            return item;
+          });
+          return setUserCart(newCart);
+        }
+        
+        window.alert(response.data.msg)
+        localStorage.removeItem("userCart");
+        navigate("/")
+
+      } catch (error) {
+        console.log(error)
+        window.alert(error.response?.data.msg)
+      }
+    }
+  }
+
   useEffect(() => {
     GetUserCart()
-    console.log("UserCart ------> ", userCart)
     setIsLoading(false);
   }, []);
 
   return (
-    <>
+    <div className="cartmain-container">
       <main className="cart-main">
           {isLoading 
             ? <Loading /> 
@@ -91,11 +128,11 @@ function Cart() {
       {userCart.length > 0 
         ? <footer className="cart-footer">
             <h1><strong>Valor Total: R${totalValue.toFixed(2)}</strong></h1>
-            <button className="pay-button">Pagar</button>
+            <button className="pay-button" onClick={handlePayment}>Pagar</button>
           </footer>
         : <></>
       }
-    </>
+    </div>
   );
 }
 

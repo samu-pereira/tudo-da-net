@@ -112,11 +112,19 @@ function Product({ product }) {
       <span className="product-price">
         <h5 className="price-tag">R$</h5>
         <h2 className="price-value">{price.toFixed(2)}</h2>
-        <h5 className="stock-value">Estoque {stock}</h5>        
+        <h5 className="stock-value" style={{color: stock < 1 ? "red" : "#311847" }}>Estoque {stock}</h5>        
       </span>
       
       <div className="product-add">
-        <button className="add-button" onClick={() => handleAdd()}>Adicionar</button>
+        <button 
+          className="add-button" 
+          onClick={() => handleAdd()}
+          style={{backgroundColor: stock < 1 ? "grey" : "#311847" }}
+          disabled={stock < 1 }
+        >
+          { stock > 0 ? "Adicionar" : "Fora de Estoque" }
+        </button>
+        
         <div className="add-quantity">
           <input
             className="quantity-value"
