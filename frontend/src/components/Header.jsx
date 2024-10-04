@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "./contexts/Contexts";
 import CartIcon from "./CartIcon";
 import axios from "axios";
 import "../styles/header.css";
@@ -45,7 +44,7 @@ function Header() {
   function DisplayName() {
     return (
       <h2 className="displayname" title="Clique para deslogar">
-        {username ? username[0].toUpperCase() + username.substring(1) : "Samuel"}
+        {username[0].toUpperCase() + username.substring(1)}
       </h2>
     );
   }

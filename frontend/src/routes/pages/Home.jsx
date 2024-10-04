@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Product from "../../components/Product.jsx";
+import Loading from "../../components/common/Loading.jsx"
 import axios from "axios";
 import "../../styles/home.css";
 
 function Home() {
   const [productList, setProductList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
 
@@ -25,10 +27,14 @@ function Home() {
 
   useEffect(() => {
     GetProductList();
+    setIsLoading(false);
   }, [query]);
 
   return (
-    <main className="home-main">
+    <>
+    {isLoading
+      ? <Loading />
+      : <main className="home-main">
       <div className="main-container">
         <div className="product-list">
           {productList.length > 0 ? (
@@ -36,11 +42,13 @@ function Home() {
               <Product key={index} product={product} />
             ))
           ) : (
-            <p>Nenhum produto disponível.</p>
+            <h1>Nenhum produto disponível.</h1>
           )}
         </div>
       </div>
     </main>
+    }
+    </>
   );
 }
 
