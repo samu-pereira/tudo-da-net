@@ -137,7 +137,24 @@ function SignUp() {
                 onChange={(e) => handlePassword(e.target.value)}
                 required
               />
-              <div className="show-password" onClick={() => setShowPassword(!showPassword)}/>
+              <div className="show-password" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword 
+                    ? <img 
+                        width="20" 
+                        height="20" 
+                        src="https://img.icons8.com/fluency-systems-regular/24/311847/visible--v1.png" 
+                        alt="visible--v1"
+                        title="Hide password"
+                      />
+                    : <img 
+                        width="20" 
+                        height="20" 
+                        src="https://img.icons8.com/fluency-systems-regular/24/311847/closed-eye.png"
+                        alt="closed-eye"
+                        title="Show password"
+                      />  
+                  }
+              </div>
             </div>
 
             <label htmlFor="matchPassword">
